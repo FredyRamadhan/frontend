@@ -77,7 +77,7 @@ export default function Home() {
           <div className="mx-auto flex max-w-[1440px] flex-col items-center px-6 pt-10 sm:px-10 lg:px-32 lg:pt-16 lg:gap-4 md:gap-2.5 gap-1.5">
             <InlineImage src={logoGroupSmall} alt="TemanIsyarat" className="h-auto w-[140px]" />
 
-            <div className="mt-6 flex max-w-4xl flex-col items-center gap-6 text-center lg:mt-8">
+            <div className="mt-6 flex max-w-3xl flex-col items-center gap-6 text-center lg:mt-8">
               <h1 className="text-balance text-[clamp(2.15rem,4vw,2.5rem)] font-bold leading-[1.3] tracking-tight text-[#111111]">
                 Mobile App Penerjemah Bahasa Isyarat Real-Time
               </h1>
@@ -86,10 +86,10 @@ export default function Home() {
                 <ActionButton href="https://github.com/temanisyarat/android/releases" tone="dark" arrow>
                   Unduh Sekarang
                 </ActionButton>
-                <ActionButton href="https://github.com/temanisyarat/manager" tone="blue">
+                <ActionButton href="https://github.com/temanisyarat/manager" tone="blue" arrow>
                   Dokumentasi
                 </ActionButton>
-                <ActionButton href="https://github.com/temanisyarat/dataset" tone="light">
+                <ActionButton href="https://github.com/temanisyarat/dataset" tone="light" arrow>
                   Dataset
                 </ActionButton>
               </div>
@@ -104,7 +104,7 @@ export default function Home() {
                 />
               </div>
 
-              <div className="block w-full max-w-sm md:hidden">
+              <div className="block w-full mb-12 max-w-sm md:hidden">
                 <InlineImage
                   src={mobileHero}
                   alt="Pratinjau aplikasi TemanIsyarat di ponsel"
@@ -159,11 +159,11 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#e5e8fa]">
+        <section className="bg-[#e5e8fa] h-screen flex items-center">
           <div className="mx-auto max-w-[1440px] px-6 py-14 sm:px-10 lg:px-32 lg:py-16">
-            <p className="mx-auto max-w-5xl text-center text-[clamp(1.5rem,3vw,2rem)] leading-[1.5] text-[#111111]">
+            <p className="mx-auto max-w-5xl text-center text-[clamp(1.25rem,3vw,2rem)] leading-[1.5] text-[#111111]">
               <span className="text-[#0000cc]">
-                Teknologi bahasa isyarat saat ini sering kali &quot;buta dialek&quot; karena hanya dilatih
+                Teknologi penerjemah bahasa isyarat saat ini sering kali &quot;buta dialek&quot; karena hanya dilatih
                 menggunakan varietas kota besar tertentu.
               </span>{" "}
               Proyek ini hadir untuk membangun infrastruktur teknologi yang menghormati ragam bahasa BISINDO
@@ -228,32 +228,35 @@ export default function Home() {
           <SectionTitle accent={false}>Profil Tim Pengembang</SectionTitle>
 
           <div className="mt-10 rounded-[64px] bg-[#e5e8fa] px-6 py-8 lg:px-16 lg:py-16">
-            <div className="grid justify-items-center gap-6 lg:justify-items-start lg:grid-cols-[repeat(2,minmax(0,272px))_1fr] lg:items-middle">
-              {teamCards.map((card) => (
-                <article key={card.title} className="w-full max-w-[272px] rounded-[24px] bg-white p-6 text-center lg:text-left">
-                  <div className="flex flex-col gap-6">
-                    <div className="relative h-[231px] overflow-hidden rounded-[12px] bg-[#d7d7d7]">
-                      <Image
-                        src={card.image}
-                        alt={card.title}
-                        fill
-                        className="object-cover"
-                        style={{ objectPosition: card.imagePosition }}
-                        sizes="272px"
-                      />
-                    </div>
+            <div className="flex flex-col sm:flex-row justify-center md:justify-between items-center w-full md:items-middle gap-20 md:gap-6">
+              {/* container buat card dipisah dari button biar bisa distyling sendiri2 */}
+              <div className="flex gap-6 sm:flex-row flex-col items-center w-full lg:max-w-3/5">
+                {teamCards.map((card) => (
+                  <article key={card.title} className="w-full rounded-[24px] bg-white p-6 text-center md:text-left">
+                    <div className="flex flex-col gap-6">
+                      <div className="relative h-[231px] overflow-hidden rounded-[12px] bg-[#d7d7d7]">
+                        <Image
+                          src={card.image}
+                          alt={card.title}
+                          fill
+                          className="object-cover"
+                          style={{ objectPosition: card.imagePosition }}
+                          sizes="272px"
+                        />
+                      </div>
 
-                    <div className="space-y-1">
-                      <h3 className="text-[clamp(1.5rem,2vw,2rem)] font-semibold leading-none text-[#111111]">
-                        {card.title}
-                      </h3>
-                      <p className="text-[16px] leading-none text-[#111111]">{card.role}</p>
+                      <div className="space-y-1">
+                        <h3 className="text-[clamp(1.5rem,2vw,2rem)] font-semibold leading-none text-[#111111]">
+                          {card.title}
+                        </h3>
+                        <p className="text-[16px] leading-none mt-4 text-[#111111]">{card.role}</p>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                ))}
+              </div>
 
-              <div className="flex justify-center mt-4 lg:justify-left">
+              <div className="sm:mt-4 lg:justify-left">
                 <ActionButton href="/tentang" tone="dark" arrow large>
                   Lihat Semua
                 </ActionButton>

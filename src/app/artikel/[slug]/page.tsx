@@ -7,7 +7,7 @@ import cheersImg from "../../../../assets/placeholders/cheers.jpg";
 import gerkatinPlaceholderImg from "../../../../assets/placeholders/gerkatin-placeholder.jpg";
 import {
   ActionButton,
-  ArticleDetailFooter,
+  SiteFooter,
   InlineImage,
   SiteHeader,
 } from "@/components/page-chrome";
@@ -57,58 +57,68 @@ export default async function ArticleInstancePage({ params }: PageProps) {
   const bodyParagraphs = blocksToParagraphs(article?.content ?? []);
   const contentParagraphs = bodyParagraphs.length > 0 ? bodyParagraphs : fallbackParagraphs;
   const heroImageUrl = isGerkatin ? cheersImg : article?.imageUrl;
+  const articleAuthor = isGerkatin ? "TemanIsyarat Team" : article?.authorName;
+  const articleDate = isGerkatin? "03 Mar 2026" : formatArticleDate(article?.date);
+  const articleReadTime = isGerkatin? "3 min read" : formatReadTime(article?.readingTime);
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-[#111111]">
       <SiteHeader />
 
-      <main className="mx-auto w-full max-w-[1280px] flex-1 px-6 py-8 sm:px-10 lg:px-[300px]">
-        <article className="space-y-6 p-2">
-          <header className="space-y-3">
-            <p className="px-2 text-[16px] leading-none text-[#7c7c7c]">{subtitle}</p>
-            <h1 className="px-1 text-[48px] font-bold leading-none tracking-tight text-[#111111]">
-              {title}
-            </h1>
-            <p className="max-w-[760px] px-2 text-[14px] leading-[1.43] text-[#7c7c7c]">
-              {description}
-            </p>
-            <p className="flex items-center gap-1 px-2 text-[12px] leading-none text-[#0000cc]">
-              <span>{formatArticleDate(article?.date)}</span>
-              <span>•</span>
-              <span>{formatReadTime(article?.readingTime)}</span>
-            </p>
-          </header>
-
+      <main className="mx-auto w-full lg:max-w-6xl flex-1 px-6 py-8 sm:px-10">
+        
+        <article className="lg:space-y-12 space-y-6">
           <div className="relative h-[272px] overflow-hidden rounded-[32px] bg-[#0000cc]">
-            {heroImageUrl ? (
-              <Image
-                src={heroImageUrl}
-                alt={title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1280px) 100vw, 680px"
-                priority
-              />
-            ) : (
-              <InlineImage
+              {heroImageUrl ? (
+                <Image
+                  src={heroImageUrl}
+                  alt={title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1280px) 100vw, 680px"
+                  priority
+                />
+              ) : (
+                <InlineImage
                 src={detailIllustration}
                 alt={title}
                 className="absolute right-0 top-[18px] h-[236px] w-auto max-w-[85%] object-contain pr-4"
-              />
-            )}
+                />
+              )}
           </div>
+          <header className="space-y-3 flex flex-col gap-4">
+            <div className="space-y-6">
+              <p className="text-lg leading-none text-[#7c7c7c] px-2">{subtitle}</p>
+              <h1 className="px-1 text-5xl font-bold leading-none tracking-tight text-[#111111]">
+                {title}
+              </h1>
+              {/* <p className="px-2 text-xl leading-[1.43] text-[#7c7c7c]">
+                {description}
+              </p> */}
+            </div>
+            <div className="flex gap-2 px-1 flex-col align-top">
+              <p className="font-bold text-[#0000cc] text-lg">{articleAuthor}</p>
+              <p className="flex items-center gap-2 text-md leading-none">
+                <span>{articleDate}</span>
+                <span>•</span>
+                <span className="text-[#0000cc]">{articleReadTime}</span>
+              </p>
+            </div>
+          </header>
+
+          
 
           <div className="space-y-4">
             {contentParagraphs.slice(0, 3).map((paragraph, index) => (
               <p
                 key={`${paragraph.slice(0, 24)}-${index}`}
-                className="max-w-[760px] p-1 text-justify text-[16px] leading-[1.5] text-black"
+                className="p-1 text-justify text-[16px] leading-[1.5] text-black"
               >
                 {paragraph}
               </p>
             ))}
 
-            {isGerkatin ? (
+            {/* {isGerkatin ? (
               <div className="relative h-[281px] w-full overflow-hidden rounded-[16px]">
                 <Image
                   src={gerkatinPlaceholderImg}
@@ -120,12 +130,12 @@ export default async function ArticleInstancePage({ params }: PageProps) {
               </div>
             ) : (
               <div className="h-[281px] w-full rounded-[16px] bg-[#c6c6c6]" aria-hidden />
-            )}
+            )} */}
 
             {contentParagraphs.slice(3).map((paragraph, index) => (
               <p
                 key={`${paragraph.slice(0, 24)}-tail-${index}`}
-                className="max-w-[760px] p-1 text-justify text-[16px] leading-[1.5] text-black"
+                className="p-1 text-justify text-[16px] leading-[1.5] text-black"
               >
                 {paragraph}
               </p>
@@ -140,7 +150,8 @@ export default async function ArticleInstancePage({ params }: PageProps) {
         </div>
       </main>
 
-      <ArticleDetailFooter />
+      {/* <ArticleDetailFooter /> */}
+      <SiteFooter />
     </div>
   );
 }

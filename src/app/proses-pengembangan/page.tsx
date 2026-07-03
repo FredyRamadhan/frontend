@@ -5,7 +5,8 @@ import documentationCafe from "../../../assets/placeholders/documentation-cafe.j
 import documentationFatisda from "../../../assets/placeholders/documentation-fatisda.jpeg";
 import {
   ActionButton,
-  ArticleDetailFooter,
+
+  SiteFooter,
   SiteHeader,
 } from "@/components/page-chrome";
 
@@ -44,10 +45,7 @@ export default function ProsesPengembanganPage() {
               Proses Pengembangan Aplikasi
             </h1>
             <p className="max-w-[760px] px-2 text-[14px] leading-[1.43] text-[#7c7c7c]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat.
+              {metadata.description}
             </p>
             <p className="flex items-center gap-1 px-2 text-[12px] leading-none text-[#0000cc]">
               <span>Today</span>
@@ -108,7 +106,8 @@ export default function ProsesPengembanganPage() {
         </div>
       </main>
 
-      <ArticleDetailFooter />
+      {/* <ArticleDetailFooter /> */}
+      <SiteFooter />
     </div>
   );
 }

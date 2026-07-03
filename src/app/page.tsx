@@ -76,8 +76,8 @@ export default function Home() {
 
       <main className="flex-1">
         <section className="overflow-hidden bg-[#e5e8fa]" aria-label="Hero">
-          <div className="mx-auto flex max-w-[1440px] flex-col items-center px-6 pt-10 sm:px-10 lg:px-32 lg:pt-16 lg:gap-4 md:gap-2.5 gap-1.5">
-            <InlineImage src={logoGroupSmall} alt="TemanIsyarat" className="h-auto w-[140px]" />
+          <div className="mx-auto flex max-w-[1440px] flex-col items-center 
+          px-6 pt-10 sm:px-10 lg:px-32 lg:pt-16 lg:gap-4 md:gap-2.5 gap-1.5">
 
             <div className="mt-6 flex max-w-3xl flex-col items-center gap-6 text-center lg:mt-8">
               <h1 className="text-balance text-[clamp(2.15rem,4vw,2.5rem)] font-bold leading-[1.3] tracking-tight text-[#111111]">
@@ -97,7 +97,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-6 flex w-4/5 justify-center md:mt-8 lg:mt-12">
+            <div className="mt-6 flex w-4/5 justify-center md:mt-8 lg:mt-12 relative bottom-0">
               <div className="hidden w-full max-w-6xl md:block">
                 <InlineImage
                   src={desktopHero}
@@ -117,51 +117,59 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="tentang" className="mx-auto max-w-[1440px] px-6 py-16 sm:px-10 lg:px-32 lg:py-20">
-          <SectionTitle>Apa itu TemanIsyarat?</SectionTitle>
+        <section id="tentang" className="
+          min-h-screen mx-auto max-w-[1440px] flex items-center">
+          <div className=" px-6 py-16 sm:px-10 lg:px-32 lg:py-20">
+            <SectionTitle>Apa itu TemanIsyarat?</SectionTitle>
 
-          <div className="mt-10 grid items-center gap-10 text-center lg:text-left lg:grid-cols-[305px_minmax(0,1fr)]">
-            <div className="flex justify-center">
-              <div className="flex w-full max-w-[305px] items-center justify-center rounded-[32px] bg-[#eaeaea] p-3">
-                <InlineImage
-                  src={illustrationMedium}
-                  alt="Ilustrasi TemanIsyarat"
-                  className="h-auto w-full object-contain"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center gap-6 lg:items-start">
-              <p className="text-[clamp(1.5rem,3vw,2rem)] leading-[1.3] text-[#111111]">
-                TemanIsyarat adalah aplikasi penerjemah bahasa isyarat berbasis kecerdasan buatan yang dirancang
-                untuk menjembatani komunikasi menjadi lebih inklusif dengan teknologi.
-              </p>
-
-              <div className="flex justify-center lg:justify-start">
-                <ActionButton href="/tentang" tone="blue" arrow>
-                  Baca Lebih Lanjut
-                </ActionButton>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-[1440px] px-6 pb-16 sm:px-10 lg:px-32 lg:pb-20">
-          <div className="grid gap-6 lg:grid-cols-3">
-            {featureCards.map((card) => (
-              <article key={card.title} className="rounded-[24px] bg-[#e5e8fa] p-10 text-left">
-                <div className="flex h-full min-h-60 md:min-h-52 lg:min-h-80 flex-col justify-between sm:gap-3 lg:gap-8">
-                  <h3 className="text-[clamp(1.6rem,2vw,2rem)] font-semibold leading-none text-[#111111]">
-                    {card.title}
-                  </h3>
-                  <p className="text-[16px] md:text-lg leading-[1.5] text-[#111111]">{card.body}</p>
+            <div className="mt-10 grid items-center gap-10 text-center lg:text-left lg:grid-cols-[305px_minmax(0,1fr)]">
+              <div className="flex justify-center">
+                <div className="flex w-full max-w-[305px] items-center justify-center rounded-[32px] bg-[#eaeaea] p-3">
+                  <InlineImage
+                    src={illustrationMedium}
+                    alt="Ilustrasi TemanIsyarat"
+                    className="h-auto w-full object-contain"
+                  />
                 </div>
-              </article>
-            ))}
+              </div>
+
+              <div className="flex flex-col items-center gap-6 lg:items-start">
+                <p className="text-[clamp(1.5rem,3vw,2rem)] leading-[1.3] text-[#111111]">
+                  TemanIsyarat adalah aplikasi penerjemah bahasa isyarat berbasis kecerdasan buatan yang dirancang
+                  untuk menjembatani komunikasi menjadi lebih inklusif dengan teknologi.
+                </p>
+
+                <div className="flex justify-center lg:justify-start">
+                  <ActionButton href="/tentang" tone="blue" arrow>
+                    Baca Lebih Lanjut
+                  </ActionButton>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="bg-[#e5e8fa] py-16 lg:py-24">
+        <section className="mx-auto max-w-[1440px] 
+        min-h-screen flex flex-col align-middle justify-center">
+          <div className="px-6 pb-16 sm:px-10 lg:px-32 lg:pb-20">
+            <SectionTitle>Fitur-fitur Utama</SectionTitle>
+            <div className="grid gap-6 lg:grid-cols-3 mt-10">
+              {featureCards.map((card) => (
+                <article key={card.title} className="rounded-[24px] bg-[#e5e8fa] p-10 text-left">
+                  <div className="flex h-full min-h-60 md:min-h-52 lg:min-h-80 flex-col justify-between sm:gap-3 lg:gap-8">
+                    <h3 className="text-[clamp(1.6rem,2vw,2rem)] font-semibold leading-none text-[#111111]">
+                      {card.title}
+                    </h3>
+                    <p className="text-[16px] md:text-lg leading-[1.5] text-[#111111]">{card.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#e5e8fa] py-16 lg:py-24
+          min-h-screen flex flex-col justify-center">
           <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-32">
             <p className="mx-auto max-w-5xl text-center text-[clamp(1.25rem,3vw,2rem)] leading-[1.5] text-[#111111]">
               <span className="text-[#0000cc]">
@@ -174,7 +182,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="tujuan" className="mx-auto max-w-[1440px] px-6 py-16 sm:px-10 lg:px-32 lg:py-20">
+        <section id="tujuan" className="mx-auto max-w-[1440px] 
+          px-6 py-16 sm:px-10 lg:px-32 lg:py-20
+          min-h-screen flex flex-col justify-center">
           <SectionTitle>Tujuan Spesifik</SectionTitle>
 
           <div className="mt-10 space-y-6">
@@ -186,7 +196,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="proses" className="mx-auto max-w-[1440px] px-6 py-16 sm:px-10 lg:px-32 lg:py-20">
+        <section id="proses" className="mx-auto max-w-[1440px] 
+          px-6 py-16 sm:px-10 lg:px-32 lg:py-20
+          min-h-screen flex flex-col justify-center">
           <SectionTitle>Proses Pengembangan</SectionTitle>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
@@ -209,7 +221,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="dataset" className="mx-auto max-w-[1440px] px-6 py-16 sm:px-10 lg:px-32 lg:py-20">
+        <section id="dataset" className="mx-auto max-w-[1440px] 
+          px-6 py-16 sm:px-10 lg:px-32 lg:py-20
+          min-h-screen flex flex-col justify-center">
           <SectionTitle accent={false}>Dataset</SectionTitle>
 
           <div className="mt-10 rounded-[24px] bg-[#e5e8fa] px-6 py-8 lg:px-16 lg:py-16">
@@ -226,7 +240,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="tim" className="mx-auto max-w-[1440px] px-6 py-16 sm:px-10 lg:px-32 lg:py-20">
+        <section id="tim" className="mx-auto max-w-[1440px]
+          px-6 py-16 sm:px-10 lg:px-32 lg:py-20
+          min-h-screen flex flex-col justify-center">
           <SectionTitle accent={false}>Profil Tim Pengembang</SectionTitle>
 
           <div className="mt-10 rounded-[64px] bg-[#e5e8fa] px-6 py-8 lg:px-16 lg:py-16">
@@ -267,7 +283,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="gerkatin" className="mx-auto max-w-[1440px] px-6 py-16 sm:px-10 lg:px-32 lg:py-20">
+        <section id="gerkatin" className="mx-auto max-w-[1440px] 
+          px-6 py-16 sm:px-10 lg:px-32 lg:py-20
+          min-h-screen flex flex-col justify-center">
           <SectionTitle>Tentang GERKATIN</SectionTitle>
 
           <div className="mt-10 grid items-center gap-10 text-center lg:text-left lg:grid-cols-[305px_minmax(0,1fr)]">

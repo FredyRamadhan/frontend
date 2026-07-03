@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import desktopHero from "../../assets/web/images/web-desktop-landing-page-image.webp";
-import mobileHero from "../../assets/web/images/mobile-ui-beranda.webp";
+import desktopHero from "../../assets/web/images/desktop-final.png";
+import mobileHero from "../../assets/web/images/Beranda-final.png";
 import articlePreview from "../../assets/web/images/mobile-ui-artikel.webp";
 import illustrationMedium from "../../assets/illustrations/illustration-medium.svg";
 import logoGroupSmall from "../../assets/logo/logo-group-small.svg";

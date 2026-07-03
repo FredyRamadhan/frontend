@@ -69,7 +69,7 @@ export default async function ArticlesPage({
           readTime: article.readingTime ?? 3,
           href: `/artikel/${article.slug ?? "tentang-gerkatin"}`,
           highlighted: index === 0,
-          imageUrl: placeholders[index % placeholders.length],
+          imageUrl: article.imageUrl,
           date: article.date,
         }))
       : fallbackCards.map((card, index) => ({

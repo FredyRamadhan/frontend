@@ -92,7 +92,7 @@ export default async function ArticlesPage({
                 title={card.title}
                 excerpt={card.excerpt}
                 href={card.href}
-                highlighted={card.highlighted}
+                highlighted={false}
                 imageUrl={card.imageUrl}
                 date={card.date}
                 readingTime={card.readTime}

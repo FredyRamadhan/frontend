@@ -133,7 +133,7 @@ export default async function ArticleInstancePage({ params }: PageProps) {
             {contentParagraphs.slice(0, 3).map((paragraph, index) => (
               <p
                 key={`${paragraph.slice(0, 24)}-${index}`}
-                className="p-1 text-justify text-[16px] leading-[1.5] text-black"
+                className="p-1 text-justify text-[16px] leading-normal text-black"
               >
                 {paragraph}
               </p>
@@ -156,7 +156,7 @@ export default async function ArticleInstancePage({ params }: PageProps) {
             {contentParagraphs.slice(3).map((paragraph, index) => (
               <p
                 key={`${paragraph.slice(0, 24)}-tail-${index}`}
-                className="p-1 text-justify text-[16px] leading-[1.5] text-black"
+                className="p-1 text-justify text-[16px] leading-normal text-black"
               >
                 {paragraph}
               </p>

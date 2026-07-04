@@ -26,7 +26,7 @@ export function TeamCard({ name, role, imageUrl }: TeamCardProps) {
         </div>
 
         <div className="space-y-3">
-          <h3 className="text-xl font-semibold leading-none text-[#111111]">{name}</h3>
+          <h3 className="text-xl font-semibold leading-6 text-[#111111]">{name}</h3>
           <p className="text-sm leading-none text-[#111111]">{role}</p>
         </div>
       </div>

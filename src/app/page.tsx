@@ -2,11 +2,10 @@ import Image from "next/image";
 
 import desktopHero from "../../assets/web/images/desktop-final.png";
 import mobileHero from "../../assets/web/images/Beranda-final.png";
-import articlePreview from "../../assets/web/images/mobile-ui-artikel.webp";
 import illustrationMedium from "../../assets/illustrations/illustration-medium.svg";
-import logoGroupSmall from "../../assets/logo/logo-group-small.svg";
 import cheersPlaceholder from "../../assets/placeholders/cheers.jpg";
-import memberWilli from "../../assets/members/willi.png";
+import fotoWili from "../../assets/members/1.png";
+import fotoPakHeri from "../../assets/members/10.png";
 import {
   ActionButton,
   InlineImage,
@@ -59,13 +58,13 @@ const teamCards = [
   {
     title: "Heri Prasetyo, S.Kom., M.Sc.Eng., Ph.D.",
     role: "Dosen Pembimbing",
-    image: memberWilli,
+    image: fotoPakHeri,
     imagePosition: "center top",
   },
   {
     title: "Dunhill William",
     role: "Ketua Tim",
-    image: memberWilli,
+    image: fotoWili,
     imagePosition: "center right",
   },
 ] as const;

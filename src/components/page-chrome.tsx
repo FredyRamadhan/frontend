@@ -7,7 +7,7 @@ import hamburgerMenu from "../../assets/web/icons/hamburger-menu.svg";
 import instagramLogo from "../../assets/web/icons/instagram-logo.svg";
 import whatsappLogo from "../../assets/web/icons/whatsapp-logo.svg";
 import githubLogo from "../../assets/web/icons/github-logo.svg";
-import googlePlayBadge from "../../assets/web/icons/get-it-on-google-play.webp";
+import googlePlayBadge from "../../assets/web/icons/get-it-on-google-play.svg";
 
 export type AssetSource = string | { src: string };
 

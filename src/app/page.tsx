@@ -14,6 +14,7 @@ import {
   SiteFooter,
   SiteHeader,
 } from "@/components/page-chrome";
+import { TeamCard } from "@/components/team-card";
 
 const featureCards = [
   {
@@ -56,7 +57,7 @@ const processCards = [
 
 const teamCards = [
   {
-    title: "Yang Bener Aja",
+    title: "Heri Prasetyo, S.Kom., M.Sc.Eng., Ph.D.",
     role: "Dosen Pembimbing",
     image: memberWilli,
     imagePosition: "center top",
@@ -250,27 +251,13 @@ export default function Home() {
               {/* container buat card dipisah dari button biar bisa distyling sendiri2 */}
               <div className="flex gap-6 sm:flex-row flex-col items-center w-full lg:max-w-3/5">
                 {teamCards.map((card) => (
-                  <article key={card.title} className="w-full rounded-[24px] bg-white p-6 text-center md:text-left">
-                    <div className="flex flex-col gap-6">
-                      <div className="relative h-[231px] overflow-hidden rounded-[12px] bg-[#d7d7d7]">
-                        <Image
-                          src={card.image}
-                          alt={card.title}
-                          fill
-                          className="object-cover"
-                          style={{ objectPosition: card.imagePosition }}
-                          sizes="272px"
-                        />
-                      </div>
-
-                      <div className="space-y-1">
-                        <h3 className="text-[clamp(1.5rem,2vw,2rem)] font-semibold leading-none text-[#111111]">
-                          {card.title}
-                        </h3>
-                        <p className="text-[16px] leading-none mt-4 text-[#111111]">{card.role}</p>
-                      </div>
-                    </div>
-                  </article>
+                  <TeamCard
+                  key={`${card.title}`}
+                  name={card.title}
+                  role={card.role}
+                  imageUrl={card.image}
+                  />
+                  
                 ))}
               </div>
 

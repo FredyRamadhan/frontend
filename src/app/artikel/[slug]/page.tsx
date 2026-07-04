@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import fs from "node:fs";
+import path from "node:path";
 
 import detailIllustration from "../../../../assets/illustrations/illustration-medium.svg";
 import cheersImg from "../../../../assets/placeholders/cheers.jpg";
@@ -17,12 +19,43 @@ import { getArticleBySlug } from "@/lib/sanity";
 
 export const dynamic = "force-dynamic";
 
-const fallbackParagraphs = [
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-  "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-];
+const GERKATIN_MD_PATH = path.join(process.cwd(), "tentang-gerkatin.md");
+
+function parseMarkdownToParagraphs(filePath: string): string[] {
+  const content = fs.readFileSync(filePath, "utf-8");
+  const blocks = content.split(/\n\n+/);
+  const paragraphs: string[] = [];
+
+  for (const block of blocks) {
+    const lines = block.split("\n").filter(Boolean);
+    if (lines.some((line) => line.startsWith("* "))) {
+      for (const line of lines) {
+        if (line.startsWith("* ")) {
+          const cleaned = line.replace(/^\* /, "").replace(/\*\*(.*?)\*\*/g, "$1").trim();
+          if (cleaned) paragraphs.push(cleaned);
+        }
+      }
+    } else {
+      const cleaned = block.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+      if (cleaned) paragraphs.push(cleaned);
+    }
+  }
+
+  return paragraphs;
+}
+
+const fallbackGerkatinParagraphs = fs.existsSync(GERKATIN_MD_PATH)
+  ? parseMarkdownToParagraphs(GERKATIN_MD_PATH)
+  : [];
+
+const fallbackParagraphs = fallbackGerkatinParagraphs.length > 0
+  ? fallbackGerkatinParagraphs
+  : [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    ];
 
 const fallbackExcerpt =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -34,12 +67,20 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-  const title = article?.article ?? (slug === "tentang-gerkatin" ? "Tentang GERKATIN" : "Artikel");
+  const isGerkatin = slug === "tentang-gerkatin";
+  const title = article?.article ?? (isGerkatin ? "Tentang GERKATIN" : "Artikel");
 
-  return {
-    title,
-    description: article ? excerptFromArticle(article, fallbackExcerpt) : fallbackExcerpt,
-  };
+  let description: string;
+  if (article) {
+    description = excerptFromArticle(article, fallbackExcerpt);
+  } else if (isGerkatin && fallbackGerkatinParagraphs.length > 0) {
+    const firstPara = fallbackGerkatinParagraphs[0];
+    description = firstPara.length > 120 ? `${firstPara.slice(0, 117).trimEnd()}...` : firstPara;
+  } else {
+    description = fallbackExcerpt;
+  }
+
+  return { title, description };
 }
 
 export default async function ArticleInstancePage({ params }: PageProps) {
@@ -58,8 +99,10 @@ export default async function ArticleInstancePage({ params }: PageProps) {
   const contentParagraphs = bodyParagraphs.length > 0 ? bodyParagraphs : fallbackParagraphs;
   const heroImageUrl = isGerkatin ? cheersImg : article?.imageUrl;
   const articleAuthor = isGerkatin ? "TemanIsyarat Team" : article?.authorName;
-  const articleDate = isGerkatin? "03 Mar 2026" : formatArticleDate(article?.date);
-  const articleReadTime = isGerkatin? "3 min read" : formatReadTime(article?.readingTime);
+  const articleDate = isGerkatin ? "03 Mar 2026" : formatArticleDate(article?.date);
+  const articleReadTime = isGerkatin
+    ? `${Math.max(1, Math.ceil(fallbackGerkatinParagraphs.join(" ").split(/\s+/).length / 200))} min read`
+    : formatReadTime(article?.readingTime);
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-[#111111]">

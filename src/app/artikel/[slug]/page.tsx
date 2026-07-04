@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import fs from "node:fs";
-import path from "node:path";
 
 import detailIllustration from "../../../../assets/illustrations/illustration-medium.svg";
 import cheersImg from "../../../../assets/placeholders/cheers.jpg";
@@ -19,43 +17,21 @@ import { getArticleBySlug } from "@/lib/sanity";
 
 export const dynamic = "force-dynamic";
 
-const GERKATIN_MD_PATH = path.join(process.cwd(), "tentang-gerkatin.md");
+const fallbackGerkatinParagraphs = [
+  "Gerkatin Surakarta (Gerakan Kesejahteraan Tunarungu Indonesia Cabang Surakarta) merupakan sebuah organisasi sosial yang menjadi wadah utama bagi komunitas Tuli di wilayah Surakarta dan sekitarnya. Organisasi ini didirikan dengan tujuan untuk memperjuangkan pemenuhan hak, mendorong kemandirian, serta meningkatkan kesejahteraan para anggotanya di berbagai lini kehidupan masyarakat. Melalui pergerakan ini, Gerkatin Surakarta berusaha menghapus stigma negatif dan memastikan bahwa teman Tuli mendapatkan kesempatan yang sama dalam aspek sosial, ekonomi, hingga hukum.",
+  "Sebagai organisasi yang bergerak aktif di bidang sosial dan kemanusiaan, Gerkatin Surakarta menjalankan beberapa fokus kegiatan utama yang terstruktur, antara lain:",
+  "Edukasi Bahasa Isyarat: Gerkatin Surakarta secara konsisten menyelenggarakan kelas Bahasa Isyarat Indonesia (Bisindo). Program ini tidak hanya ditujukan untuk memperkuat komunikasi internal sesama teman Tuli, melainkan juga dibuka untuk masyarakat umum (komunitas Dengar). Langkah edukatif ini diambil guna mengikis hambatan komunikasi di ruang publik dan membangun ekosistem masyarakat yang lebih inklusif serta saling memahami.",
+  "Pemberdayaan Ekonomi dan Keterampilan: Untuk mendorong kemandirian finansial para anggotanya, organisasi ini kerap mengadakan berbagai pelatihan kerja dan keterampilan praktis. Program ini mencakup bidang kerajinan tangan, tata boga, hingga pemanfaatan teknologi digital dan kewirausahaan. Melalui pembekalan ini, diharapkan teman Tuli memiliki daya saing yang kuat di dunia kerja maupun saat merintis usaha mandiri.",
+  "Advokasi Hak Disabilitas: Gerkatin Surakarta berperan aktif sebagai penyambung lidah komunitas Tuli kepada pemerintah daerah dan instansi terkait. Fokus utamanya adalah mendorong penyediaan fasilitas publik yang aksesibel di Kota Solo. Hal ini meliputi penyediaan Juru Bahasa Isyarat (JBI) dalam agenda-agenda resmi pemerintah, layanan kesehatan, hingga akses informasi yang ramah disabilitas di transportasi umum.",
+  "Melalui konsistensi dalam berbagai program tersebut, Gerkatin Surakarta terus berupaya menjadi jembatan penyerasian yang kuat antara komunitas Tuli dan masyarakat luas. Kehadiran organisasi ini menjadi bukti nyata bahwa keterbatasan fisik bukanlah penghalang untuk tetap produktif, mandiri, dan memberikan kontribusi positif bagi lingkungan sekitar.",
+];
 
-function parseMarkdownToParagraphs(filePath: string): string[] {
-  const content = fs.readFileSync(filePath, "utf-8");
-  const blocks = content.split(/\n\n+/);
-  const paragraphs: string[] = [];
-
-  for (const block of blocks) {
-    const lines = block.split("\n").filter(Boolean);
-    if (lines.some((line) => line.startsWith("* "))) {
-      for (const line of lines) {
-        if (line.startsWith("* ")) {
-          const cleaned = line.replace(/^\* /, "").replace(/\*\*(.*?)\*\*/g, "$1").trim();
-          if (cleaned) paragraphs.push(cleaned);
-        }
-      }
-    } else {
-      const cleaned = block.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-      if (cleaned) paragraphs.push(cleaned);
-    }
-  }
-
-  return paragraphs;
-}
-
-const fallbackGerkatinParagraphs = fs.existsSync(GERKATIN_MD_PATH)
-  ? parseMarkdownToParagraphs(GERKATIN_MD_PATH)
-  : [];
-
-const fallbackParagraphs = fallbackGerkatinParagraphs.length > 0
-  ? fallbackGerkatinParagraphs
-  : [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    ];
+const fallbackParagraphs = [
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+  "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+];
 
 const fallbackExcerpt =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -96,7 +72,9 @@ export default async function ArticleInstancePage({ params }: PageProps) {
   const description = article ? excerptFromArticle(article, fallbackExcerpt) : fallbackExcerpt;
   const isGerkatin = slug === "tentang-gerkatin";
   const bodyParagraphs = blocksToParagraphs(article?.content ?? []);
-  const contentParagraphs = bodyParagraphs.length > 0 ? bodyParagraphs : fallbackParagraphs;
+  const contentParagraphs = bodyParagraphs.length > 0
+    ? bodyParagraphs
+    : (isGerkatin ? fallbackGerkatinParagraphs : fallbackParagraphs);
   const heroImageUrl = isGerkatin ? cheersImg : article?.imageUrl;
   const articleAuthor = isGerkatin ? "TemanIsyarat Team" : article?.authorName;
   const articleDate = isGerkatin ? "03 Mar 2026" : formatArticleDate(article?.date);

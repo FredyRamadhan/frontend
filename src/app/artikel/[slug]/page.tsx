@@ -4,12 +4,13 @@ import { notFound } from "next/navigation";
 
 import detailIllustration from "../../../../assets/illustrations/illustration-medium.svg";
 import cheersImg from "../../../../assets/placeholders/cheers.jpg";
-import gerkatinPlaceholderImg from "../../../../assets/placeholders/gerkatin-placeholder.jpg";
+import labelImage from "../../../../assets/web/images/Label.png";
 import {
   ActionButton,
   SiteFooter,
   InlineImage,
   SiteHeader,
+  SmartLink
 } from "@/components/page-chrome";
 import { blocksToParagraphs, excerptFromArticle } from "@/lib/articles";
 import { formatArticleDate, formatReadTime } from "@/lib/format";
@@ -139,19 +140,19 @@ export default async function ArticleInstancePage({ params }: PageProps) {
               </p>
             ))}
 
-            {/* {isGerkatin ? (
-              <div className="relative h-[281px] w-full overflow-hidden rounded-[16px]">
+            
+            <SmartLink href="#">
+              <div className="relative h-[281px] w-full overflow-hidden rounded-[16px]" >
                 <Image
-                  src={gerkatinPlaceholderImg}
-                  alt="Tentang GERKATIN"
+                  src={labelImage}
+                  alt="Get on Google Play"
                   fill
                   className="object-cover"
+                  unoptimized
                   sizes="(max-width: 1280px) 100vw, 680px"
                 />
               </div>
-            ) : (
-              <div className="h-[281px] w-full rounded-[16px] bg-[#c6c6c6]" aria-hidden />
-            )} */}
+            </SmartLink>
 
             {contentParagraphs.slice(3).map((paragraph, index) => (
               <p

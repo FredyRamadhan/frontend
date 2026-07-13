@@ -140,7 +140,7 @@ export default function Home() {
                 </p>
 
                 <div className="flex justify-center lg:justify-start">
-                  <ActionButton href="/tentang" tone="blue" arrow>
+                  <ActionButton href="/tentang-proyek" tone="blue" arrow>
                     Baca Lebih Lanjut
                   </ActionButton>
                 </div>
